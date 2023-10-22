@@ -1,4 +1,5 @@
 # little script to format multi-line paragraphs from texts into single line paragraphs and then return the text
+import sys
 
 def combine_paragraphs(text):
     # Split the text into paragraphs using double newline characters as a separator
@@ -27,9 +28,16 @@ def replace_in_file(file_path):
 
         print(f"Text in {file_path} has been replaced in-place.")
     except FileNotFoundError:
-        print(f"File {file_path} not found.")
+        print(f"File {file_path} not found. Try paragrapher.py <filepath>")
     except Exception as e:
         print(f"An error occurred: {e}")
 
-file_path = './drjekyllandmrhyde.txt' 
-replace_in_file(file_path)
+def main():
+    argv = sys.argv
+    
+    file_path = argv[1]
+    replace_in_file(file_path)
+
+
+if __name__ == '__main__': 
+	main()  
