@@ -1,4 +1,6 @@
 import sqlite3
+from copy import error
+import sqlite3
 import sys
 
 
@@ -23,24 +25,48 @@ def coleman_liau_rating(candidate_string):
     L_value = float(index_values["letters"] / index_values["words"]) * 100
     S_value = float(index_values["sentences"] / index_values["words"]) * 100
     cl_rating = (0.0588 * L_value) - (0.296 * S_value) - 15.8
-
+    if cl_rating < 1:
+        cl_rating = 1
     return round(cl_rating)
 
-def handle_line(line):
-    line_rating = coleman_liau_rating(line)
-    print(f"rating: {line_rating}")
-    print(f"line: {line}")
-
+def handle_line(tline):
+    try:
+        line_rating = coleman_liau_rating(tline)
+        tline = tline.replace("\n", "")
+        result = {'rating': line_rating, 'line': tline}
+        # print(result)
+    except error:
+        print (error)
+    return result
 
 def rate_file(file_path):
+    minlength = 40
     with open(file_path, "r") as file:
         for line in file:
-            if (len(line) > 2):
-                handle_line(line)
+            if (len(line) > minlength):
+                line_rating = handle_line(line)
+                db_insert(1, line_rating)
+
+
+def db_insert(book_id, line):
+    conn = sqlite3.connect("books.db")
+    cursor = conn.cursor()
+    sql = "INSERT INTO paragraphs (book_id, text, difficulty) VALUES (?, ?, ?)"
+    try:
+        cursor.execute(sql, (book_id, line['line'], line['rating']))
+        conn.commit()
+    except sqlite3.Error as e:
+        print("SQLite error:", e)
+        conn.rollback()
+    cursor.close()
+    conn.close()
+
 
 def main():
     file_path = sys.argv[1]
     rate_file(file_path)
+    # db_insert()
+
 
 if __name__ == '__main__': 
 	main()  

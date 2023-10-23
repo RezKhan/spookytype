@@ -1,4 +1,5 @@
 # little script to format multi-line paragraphs from texts into single line paragraphs and then return the text
+# necessary part of clean up before any manual processing ahead of db entry
 import sys
 
 def combine_paragraphs(text):
