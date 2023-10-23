@@ -1,5 +1,4 @@
 import sqlite3
-from copy import error
 import sqlite3
 import sys
 
@@ -20,6 +19,7 @@ def get_index_values(candidate_string):
             indices["sentences"] += 1
     return indices
 
+
 def coleman_liau_rating(candidate_string):
     index_values = get_index_values(candidate_string)
     L_value = float(index_values["letters"] / index_values["words"]) * 100
@@ -29,15 +29,18 @@ def coleman_liau_rating(candidate_string):
         cl_rating = 1
     return round(cl_rating)
 
+
 def handle_line(tline):
     try:
         line_rating = coleman_liau_rating(tline)
         tline = tline.replace("\n", "")
         result = {'rating': line_rating, 'line': tline}
         # print(result)
-    except error:
-        print (error)
-    return result
+        return result
+    except:
+        print ("Unable to rateline")
+        return None
+
 
 def rate_file(file_path):
     minlength = 40
