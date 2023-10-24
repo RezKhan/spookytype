@@ -1,24 +1,38 @@
-from flask import Flask, request
+import random
+import sys
+from flask import Flask, request, render_template, jsonify
+from random import randrange
 import sqlite3
 
 app = Flask(__name__)
 
-try: 
-    dbconnection = sqlite3.connect('books.db')
-    db = dbconnection.cursor()
-except sqlite3.Error as error:
-    print("Error connecting to db", error)
 
-# to run query
-# db.execute("SQL Query WHERE field = ?", variable)
-# rows = db.fetchall()
-# 
-# 
-# To close connection:
-# db.close()
-# dbconnection.close()
+def db_paragraph(level):
+    try: 
+        dbconnection = sqlite3.connect('books.db')
+        db = dbconnection.cursor()
+        db.execute("SELECT * FROM paragraphs WHERE difficulty = ?", str(level))
+    except sqlite3.Error as error:
+        print("Error connecting to db", error)
+        return None
+    
+    rows = db.fetchall()
+    db.close()
+    dbconnection.close()
+    return rows
+
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, Mum!</>"
+def index():
+    range_start = 1
+    range_end = 4
+    level = round(randrange(range_start, range_end))
+    result = db_paragraph(level)
+    target = randrange(1, len(result))
+    print(result[target])
+    paragraph = result[target][2].split(" ")
+    return render_template("./index.html", paragraph=paragraph)
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
