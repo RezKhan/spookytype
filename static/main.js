@@ -6,6 +6,17 @@ spans.forEach((el, index) => {
     el.id = index; 
 });
 
+function cursor() {
+    spans.forEach(el => {
+        if (counter == el.id) {
+            el.classList.add("blink")
+        } else {
+            el.classList.remove("blink")
+        }
+    }) 
+}
+
+
 function keyHandler(keyEvt) {
     controlKeys = ['Alt', 'Control', 'Enter', 'Meta', 'Shift', ' ', 'Tab']
     if (controlKeys.includes(keyEvt.key)) {
@@ -13,18 +24,15 @@ function keyHandler(keyEvt) {
     }
     if (keyEvt.key == spans[counter].innerHTML) {
         spans[counter].classList.add("good");
-        console.log(spans[counter], "GOOD")
+        // console.log(spans[counter], "GOOD")
     } else {
         spans[counter].classList.add("bad");
-        console.log(spans[counter],"BAD")
+        // console.log(spans[counter],"BAD")
     }
     counter++;
+    cursor();
 }
 
-// TODO: Add some way to simulate a cursor
-function cursor() {
-
-}
-
+cursor();
 
 document.addEventListener("keydown", keyHandler);

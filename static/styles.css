@@ -32,6 +32,21 @@ main {
     display: inline;
 }
 
+@keyframes blinking {
+    0% {
+        background-color: #e06e23;
+        opacity: 0;
+    }
+    100% {
+        background-color: #e06e23;
+        opacity: 100;
+    }
+}
+
+.blink {
+    animation: blinking 0.5s infinite;
+}
+
 .good {
     color: #0ec511;
 }
