@@ -1,0 +1,12 @@
+{%extends "layout.html" %}
+
+{% block main %}
+<div class="content">
+    {% for word in paragraph %}
+    <div class="word">
+        {% for char in word %}<span class="letter">{{ char }}</span>{% endfor %}
+    </div>
+    {% endfor %}    
+</div>
+{% endblock%}
+
