@@ -2,11 +2,16 @@
 
 {% block main %}
 <div class="content">
-    {% for word in paragraph %}
-    <div class="word">
-        {% for char in word %}<span class="letter">{{ char }}</span>{% endfor %}
+    <div class="word-container">
+        {% for word in paragraph %}
+        <div class="word">
+            {% for char in word %}{% if loop.last %}<span class="letter ll">{{ char }}</span>{% else %}<span class="letter">{{ char }}</span>{% endif %}{% endfor %}<span class="letter"> </span>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}    
+    <div class="timer-container">
+        wpm
+    </div>
 </div>
 {% endblock%}
 

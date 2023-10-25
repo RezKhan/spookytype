@@ -1,11 +1,16 @@
 body {
-    background-color: #201b36;
+    background-color: #161324;
     color: #ffffff;
 }
 
 main {
     min-height: calc(100vh-60px);
     justify-content: space-around;
+}
+
+.main-container {
+    width: 80vw;
+    margin: auto
 }
 
 .footer {
@@ -48,9 +53,13 @@ main {
 }
 
 .good {
-    color: #0ec511;
+    color: #e06e23;
 }
 
 .bad {
     color: #c70707;
+}
+
+.timer-container {
+    margin-top: 5rem;
 }

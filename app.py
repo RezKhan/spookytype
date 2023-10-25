@@ -1,4 +1,3 @@
-import random
 import sys
 from flask import Flask, request, render_template, jsonify
 from random import randrange
@@ -7,7 +6,7 @@ import sqlite3
 app = Flask(__name__)
 
 
-def db_paragraph(level):
+def db_paragraphs(level):
     try: 
         dbconnection = sqlite3.connect('books.db')
         db = dbconnection.cursor()
@@ -21,16 +20,22 @@ def db_paragraph(level):
     dbconnection.close()
     return rows
 
-
-@app.route("/")
-def index():
+def clean_paragraph():
     range_start = 1
     range_end = 4
-    level = round(randrange(range_start, range_end))
-    result = db_paragraph(level)
+    level = randrange(range_start, range_end)
+    result = db_paragraphs(level)
     target = randrange(1, len(result))
     print(result[target])
     paragraph = result[target][2].split(" ")
+    for word in paragraph:
+        word = word.replace("'", "")
+    return paragraph
+
+
+@app.route("/")
+def index():
+    paragraph = clean_paragraph()    
     return render_template("./index.html", paragraph=paragraph)
 
 

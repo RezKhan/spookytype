@@ -2,7 +2,7 @@ import sqlite3
 import sqlite3
 import sys
 
-
+# TODO: Coleman-Liau is a readability rating, not typing, new rating needed.
 def get_index_values(candidate_string):
     indices = {"letters": 0, "words": 0, "sentences": 0}
     length = len(candidate_string)
