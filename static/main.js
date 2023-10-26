@@ -60,7 +60,7 @@ function happyPath(keyEvt) {
     if (keyEvt.key == 'Backspace' && spookytype.counter <= 0) {
         return false;
     }
-    if (spookytype.counter >= spookytype.letters.length) {
+    if (spookytype.counter >= spookytype.letters.length - 1) {
         return false;
     }
     return true;
@@ -87,12 +87,13 @@ function keyHandler(keyEvt) {
     if(!happyPath(keyEvt)) {
         return;
     }
-    assessKeyEntry(keyEvt)
     if (spookytype.counter == 0) {
         spookytype.started = true;
         spookytype.timerStart = performance.now();
         spookytype.lastWordTimer = performance.now();
+        spookytype.timerbox.classList.remove("off");
     }
+    assessKeyEntry(keyEvt)
     wpmCalc();
     cursor();
 }

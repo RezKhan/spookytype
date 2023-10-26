@@ -79,3 +79,7 @@ input[type=text] {
 .timer-container {
     margin-top: 5rem;
 }
+
+.off {
+    display: none;
+}
