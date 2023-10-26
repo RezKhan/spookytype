@@ -49,7 +49,7 @@ main {
 }
 
 .blink {
-    animation: blinking 0.5s infinite;
+    animation: blinking 0.75s infinite;
 }
 
 .good {
