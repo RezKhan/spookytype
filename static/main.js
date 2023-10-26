@@ -5,7 +5,6 @@ const spookytype = {
     counter: 0,
     started: false, 
     timerStart: 0,
-    letterTimer: 0,
     wordTimer: 0,
     lastWordTimer: 0,
     wordsCompleted: 0,
@@ -27,10 +26,11 @@ function wpmCalc() {
     } 
     spookytype.wordsCompleted++;
     spookytype.wordTimer = performance.now()
-    difference = (spookytype.wordTimer - spookytype.lastWordTimer) / 1000;
-    spookytype.wpm += 60 / difference;
+    currentWordTime = (spookytype.wordTimer - spookytype.lastWordTimer) / 1000;
+    totalWordTime = (spookytype.wordTimer - spookytype.timerStart) / 1000;
+    spookytype.wpm += totalWordTime;
     spookytype.lastWordTimer = spookytype.wordTimer;
-    spookytype.timerbox.innerHTML = spookytype.wpm.toFixed(2);
+    spookytype.timerbox.innerHTML = ("Total time: " + totalWordTime.toFixed(2) + " Total words: " + spookytype.wordsCompleted + " WPM: " +  (spookytype.wordsCompleted / totalWordTime * 60).toFixed(2) + " Last word: " + currentWordTime);
 
 }
 
@@ -45,32 +45,51 @@ function cursor() {
     }) 
 }
 
+function moveToInput() {
+    inp = document.querySelector(".wordinput")
+    inp.focus();
+}
 
-function keyHandler(keyEvt) {
+function happyPath(keyEvt) {
     controlKeys = ['Alt', 'Control', 'Enter', 'Meta', 'Shift', 'Tab'];
     if (controlKeys.includes(keyEvt.key)) {
-        return;
+        return false;
+    }
+    if (keyEvt.key == 'Backspace' && spookytype.counter == 0) {
+        return false;
     }
     if (spookytype.counter >= spookytype.letters.length) {
-        return;
+        return false;
     }
+}
+
+function assessKeyEntry(keyEvt) {
     if (keyEvt.key == spookytype.letters[spookytype.counter].innerHTML) {
         spookytype.letters[spookytype.counter].classList.add("good");
         
     } else {
         spookytype.letters[spookytype.counter].classList.add("bad");
     } 
-    // spookytype.letterTimer = performance.now();
+    spookytype.counter++;
+}
+
+function keyHandler(keyEvt) {
+    if(!happyPath) {
+        return;
+    }
+    assessKeyEntry(keyEvt)
     if (spookytype.counter == 0) {
         spookytype.started = true;
         spookytype.timerStart = performance.now();
         spookytype.lastWordTimer = performance.now();
     }
     wpmCalc();
-    spookytype.counter++;
     cursor();
 }
 
-
 cursor();
+
+
+
 document.addEventListener("keydown", keyHandler);
+document.addEventListener("click", moveToInput);
