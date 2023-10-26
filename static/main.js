@@ -9,7 +9,9 @@ const spookytype = {
     wordTimer: 0,
     lastWordTimer: 0,
     wordsCompleted: 0,
-    timerEnd: 30 * 1000, // milliseconds
+    incorrectLetters: 0, 
+    correctLetters: 0,
+    timerEnd: 60 * 1000, // milliseconds
     wpm: 0,
 }
 
@@ -32,7 +34,7 @@ function wpmCalc() {
     totalWordTime = (spookytype.wordTimer - spookytype.timerStart) / 1000;
     spookytype.wpm += totalWordTime;
     spookytype.lastWordTimer = spookytype.wordTimer;
-    spookytype.timerbox.innerHTML = (" WPM: " +  (spookytype.wordsCompleted / totalWordTime * 60).toFixed(2) + " | Last word: " + currentWordTime + " | Total time: " + totalWordTime.toFixed(2) + " | Total words: " + spookytype.wordsCompleted);
+    spookytype.timerbox.innerHTML = ("Raw WPM: " +  (spookytype.wordsCompleted / totalWordTime * 60).toFixed(2) + " | Real WPM: " + ((spookytype.wordsCompleted / totalWordTime * 60) * (spookytype.correctLetters / (spookytype.correctLetters + spookytype.incorrectLetters))).toFixed(2) + " | Total time: " + totalWordTime.toFixed(2) + " | Total words: " + spookytype.wordsCompleted);
 
 }
 
@@ -70,15 +72,22 @@ function assessKeyEntry(keyEvt) {
     if (keyEvt.key == 'Backspace') {
         spookytype.counter--;
         spookytype.letters[spookytype.counter] = spookytype.originalText[spookytype.counter];
-        spookytype.letters[spookytype.counter].classList.remove("bad");
-        spookytype.letters[spookytype.counter].classList.remove("good");
+        if (spookytype.letters[spookytype.counter].classList.includes("bad")) {
+            spookytype.letters[spookytype.counter].classList.remove("bad");
+            spookytype.incorrectLetters--;
+        }
+        if (spookytype.letters[spookytype.counter].classList.includes("good")) {
+            spookytype.letters[spookytype.counter].classList.remove("good");
+            spookytype.correctLetters--;
+        }
         return;
     }
     if (keyEvt.key == spookytype.letters[spookytype.counter].innerHTML) {
         spookytype.letters[spookytype.counter].classList.add("good");
-        
+        spookytype.correctLetters++;
     } else {
         spookytype.letters[spookytype.counter].classList.add("bad");
+        spookytype.incorrectLetters++;
     } 
     spookytype.counter++;
 }

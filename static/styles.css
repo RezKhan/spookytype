@@ -59,7 +59,7 @@ main {
 }
 
 .good {
-    color: #e06e23;
+    color: var(--fg-color);
 }
 
 .bad {
