@@ -27,9 +27,8 @@ def clean_paragraph():
     result = db_paragraphs(level)
     target = randrange(1, len(result))
     print(result[target])
-    paragraph = result[target][2].split(" ")
-    for word in paragraph:
-        word = word.replace("'", "")
+    clean = result[target][2].replace("'", "")
+    paragraph = clean.split(" ")
     return paragraph
 
 
