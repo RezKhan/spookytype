@@ -1,3 +1,2 @@
 Flask
-random
 sqlite3
