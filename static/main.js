@@ -2,6 +2,7 @@ const spookytype = {
     words: document.querySelectorAll(".word"),
     letters: document.querySelectorAll(".letter"),
     timerbox: document.querySelector(".timer-container"),
+    originalText: [],
     counter: 0,
     started: false, 
     timerStart: 0,
@@ -18,6 +19,7 @@ spookytype.words.forEach((el, index) => {
 
 spookytype.letters.forEach((el, index) => {
     el.id = "ltr" + index; 
+    spookytype.originalText[index] = el.innerHTML;
 });
 
 function wpmCalc() {
@@ -30,7 +32,7 @@ function wpmCalc() {
     totalWordTime = (spookytype.wordTimer - spookytype.timerStart) / 1000;
     spookytype.wpm += totalWordTime;
     spookytype.lastWordTimer = spookytype.wordTimer;
-    spookytype.timerbox.innerHTML = ("Total time: " + totalWordTime.toFixed(2) + " Total words: " + spookytype.wordsCompleted + " WPM: " +  (spookytype.wordsCompleted / totalWordTime * 60).toFixed(2) + " Last word: " + currentWordTime);
+    spookytype.timerbox.innerHTML = (" WPM: " +  (spookytype.wordsCompleted / totalWordTime * 60).toFixed(2) + " | Last word: " + currentWordTime + " | Total time: " + totalWordTime.toFixed(2) + " | Total words: " + spookytype.wordsCompleted);
 
 }
 
@@ -55,15 +57,23 @@ function happyPath(keyEvt) {
     if (controlKeys.includes(keyEvt.key)) {
         return false;
     }
-    if (keyEvt.key == 'Backspace' && spookytype.counter == 0) {
+    if (keyEvt.key == 'Backspace' && spookytype.counter <= 0) {
         return false;
     }
     if (spookytype.counter >= spookytype.letters.length) {
         return false;
     }
+    return true;
 }
 
 function assessKeyEntry(keyEvt) {
+    if (keyEvt.key == 'Backspace') {
+        spookytype.counter--;
+        spookytype.letters[spookytype.counter] = spookytype.originalText[spookytype.counter];
+        spookytype.letters[spookytype.counter].classList.remove("bad");
+        spookytype.letters[spookytype.counter].classList.remove("good");
+        return;
+    }
     if (keyEvt.key == spookytype.letters[spookytype.counter].innerHTML) {
         spookytype.letters[spookytype.counter].classList.add("good");
         
@@ -74,7 +84,7 @@ function assessKeyEntry(keyEvt) {
 }
 
 function keyHandler(keyEvt) {
-    if(!happyPath) {
+    if(!happyPath(keyEvt)) {
         return;
     }
     assessKeyEntry(keyEvt)
@@ -88,8 +98,6 @@ function keyHandler(keyEvt) {
 }
 
 cursor();
-
-
 
 document.addEventListener("keydown", keyHandler);
 document.addEventListener("click", moveToInput);

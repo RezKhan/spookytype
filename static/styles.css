@@ -1,6 +1,12 @@
+:root {
+    --bg-color: #161324;
+    --fg-color: #e06e23;
+    --white: #ffffff;
+}
+
 body {
-    background-color: #161324;
-    color: #ffffff;
+    background-color: var(--bg-color);
+    color: var(--white);
 }
 
 main {
@@ -23,7 +29,7 @@ main {
     margin: auto;
     font-family: 'Griffy', sans-serif;
     font-size: 5rem;
-    color: #e06e23;
+    color: var(--fg-color);
     text-align: center;
 }
 
@@ -39,11 +45,11 @@ main {
 
 @keyframes blinking {
     0% {
-        background-color: #e06e23;
+        background-color: var(--fg-color);
         opacity: 0;
     }
     100% {
-        background-color: #e06e23;
+        background-color: var(--fg-color);
         opacity: 100;
     }
 }
@@ -58,6 +64,16 @@ main {
 
 .bad {
     color: #c70707;
+}
+
+.input-container {
+    opacity: 0;
+}
+
+input[type=text] {
+    border: 0;
+    background-color: var(--bg-color);
+    outline: none;
 }
 
 .timer-container {
