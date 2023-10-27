@@ -42,13 +42,13 @@ def handle_line(tline):
         return None
 
 
-def rate_file(file_path):
-    minlength = 40
+def rate_file(file_path, book_id):
+    minlength = 50
     with open(file_path, "r") as file:
         for line in file:
             if (len(line) > minlength):
                 line_rating = handle_line(line)
-                db_insert(3, line_rating)
+                db_insert(book_id, line_rating)
 
 
 def db_insert(book_id, line):
@@ -67,8 +67,8 @@ def db_insert(book_id, line):
 
 def main():
     file_path = sys.argv[1]
-    rate_file(file_path)
-    # db_insert()
+    book_id = sys.argv[2]
+    rate_file(file_path, book_id)
 
 
 if __name__ == '__main__': 
