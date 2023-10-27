@@ -2,6 +2,7 @@ const spookytype = {
     words: document.querySelectorAll(".word"),
     letters: document.querySelectorAll(".letter"),
     timerbox: document.querySelector(".timer-container"),
+    typingprompt: document.querySelector(".typing-prompt"),
     originalText: [],
     counter: 0,
     started: false, 
@@ -78,11 +79,11 @@ function assessKeyEntry(keyEvt) {
         spookytype.letters[spookytype.counter] = spookytype.originalText[spookytype.counter];
         if (spookytype.letters[spookytype.counter].classList.includes("bad")) {
             spookytype.letters[spookytype.counter].classList.remove("bad");
-            spookytype.incorrectLetters--;
+            // spookytype.incorrectLetters--;
         }
         if (spookytype.letters[spookytype.counter].classList.includes("good")) {
             spookytype.letters[spookytype.counter].classList.remove("good");
-            spookytype.correctLetters--;
+            // spookytype.correctLetters--;
         }
         return;
     }
@@ -105,6 +106,7 @@ function keyHandler(keyEvt) {
         spookytype.timerStart = performance.now();
         spookytype.lastWordTimer = performance.now();
         spookytype.timerbox.classList.remove("off");
+        spookytype.typingprompt.classList.add("off");
     }
     assessKeyEntry(keyEvt)
     wpmCalc();
