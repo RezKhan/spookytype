@@ -9,8 +9,25 @@ body {
 }
 
 main {
-    min-height: calc(100vh-60px);
+    min-height: 50vh;
     justify-content: space-around;
+}
+
+.header {
+    text-align: center;
+    color: var(--fg-color);
+}
+
+.spooky-title {
+    margin: auto;
+    font-family: 'Griffy', sans-serif;
+    font-size: 5em;
+}
+
+.typing-prompt {
+    margin: auto;
+    margin-top: 1rem;
+    font-size: 1.5em;
 }
 
 .main-container {
@@ -25,16 +42,8 @@ main {
     text-align: center;
 }
 
-.spooky-title {
-    margin: auto;
-    font-family: 'Griffy', sans-serif;
-    font-size: 5em;
-    color: var(--fg-color);
-    text-align: center;
-}
-
 .content{
-    margin-top: 5rem;
+    margin-top: 3rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
 }
@@ -91,6 +100,8 @@ input[type=text] {
     text-align: left;
 }
 
+
 .off {
-    display: none;
+    /* display: none; */
+    opacity: 0;
 }
