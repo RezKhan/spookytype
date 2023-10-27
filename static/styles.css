@@ -1,12 +1,11 @@
 :root {
     --bg-color: #161324;
     --fg-color: #e06e23;
-    --white: #ffffff;
 }
 
 body {
     background-color: var(--bg-color);
-    color: var(--white);
+    color: whitesmoke;
 }
 
 main {
@@ -16,7 +15,8 @@ main {
 
 .main-container {
     width: 80vw;
-    margin: auto
+    margin: auto;
+    font-size: 1em;
 }
 
 .footer {
@@ -28,7 +28,7 @@ main {
 .spooky-title {
     margin: auto;
     font-family: 'Griffy', sans-serif;
-    font-size: 5rem;
+    font-size: 5em;
     color: var(--fg-color);
     text-align: center;
 }
@@ -37,6 +37,13 @@ main {
     margin-top: 5rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
+}
+
+.book-info-container {
+    color: slategray;
+    font-size: 0.8em;
+    text-align: right;
+    margin-bottom: 2rem;
 }
 
 .word {
@@ -78,7 +85,10 @@ input[type=text] {
 }
 
 .timer-container {
-    margin-top: 5rem;
+    margin-top: 2rem;
+    color: slategray;
+    font-size: 0.8em;
+    text-align: left;
 }
 
 .off {

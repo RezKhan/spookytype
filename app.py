@@ -27,13 +27,28 @@ def clean_paragraph():
     target = randrange(1, len(result))
     print(result[target])
     paragraph = result[target][2].split(" ")
-    return paragraph
+    details = {'book': result[target][1], 'text': paragraph}
+    return details
 
+def db_book(book_id):
+    try: 
+        dbconnection = sqlite3.connect('books.db')
+        db = dbconnection.cursor()
+        db.execute("SELECT authors.name AS author, books.title AS title FROM books JOIN authors ON books.author_id = authors.id WHERE books.id = ?", str(book_id))
+    except sqlite3.Error as error:
+        print("Error connecting to db", error)
+        return None
+    
+    rows = db.fetchall()
+    db.close()
+    dbconnection.close()
+    return rows
 
 @app.route("/")
 def index():
-    paragraph = clean_paragraph()    
-    return render_template("./index.html", paragraph=paragraph)
+    paragraph = clean_paragraph()
+    book = db_book(paragraph['book'])
+    return render_template("./index.html", paragraph=paragraph['text'], author=book[0][0], title=book[0][1])
 
 
 if __name__ == '__main__':
