@@ -31,14 +31,14 @@ function wpmCalc() {
     spookytype.wordsCompleted++;
     spookytype.wordTimer = performance.now()
     currentWordTime = (spookytype.wordTimer - spookytype.lastWordTimer) / 1000;
-    totalWordTime = (spookytype.wordTimer - spookytype.timerStart) / 1000;
+    totalWordTime = (spookytype.wordTimer  - spookytype.timerStart) / 1000;
     spookytype.wpm += totalWordTime;
     spookytype.lastWordTimer = spookytype.wordTimer;
     spookytype.timerbox.innerHTML = (`Raw WPM: ${(spookytype.wordsCompleted / totalWordTime * 60).toFixed(2)} <br>
     Real WPM: ${((spookytype.wordsCompleted / totalWordTime * 60) * (spookytype.correctLetters / (spookytype.correctLetters + spookytype.incorrectLetters))).toFixed(2)} <br>
+    Accuracy: ${(spookytype.correctLetters / (spookytype.correctLetters + spookytype.incorrectLetters) * 100).toFixed(2)}%<BR>
     Total time: ${totalWordTime.toFixed(2)} <br>
-    Total words: ${spookytype.wordsCompleted}<br>
-    Accuracy: ${(spookytype.correctLetters / (spookytype.correctLetters + spookytype.incorrectLetters) * 100).toFixed(2)}`);
+    Total words: ${spookytype.wordsCompleted}<br>`);
 
 }
 
