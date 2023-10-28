@@ -20,11 +20,14 @@ def db_paragraphs(level):
     return rows
 
 def clean_paragraph():
-    range_start = 1
+    range_start = 2
     range_end = 4
     level = randrange(range_start, range_end)
     result = db_paragraphs(level)
-    target = randrange(1, len(result))
+    if (len(result) > 1):
+        target = randrange(1, len(result))
+    else:
+        target = 1
     print(result[target])
     paragraph = result[target][2].split(" ")
     details = {'book': result[target][1], 'text': paragraph}
