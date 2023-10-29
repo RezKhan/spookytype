@@ -1,6 +1,6 @@
 # SpookyType
 
-#### Video Demo: 
+#### Video Demo: https://youtu.be/soIK_Jfjjz0
 #### Description: Simple touch typing with some selected spooky texts from Project Gutenberg. 
 
 #### text_paragrapher.py
