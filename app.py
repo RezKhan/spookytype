@@ -8,7 +8,7 @@ db_path_local = 'books.db' #local testing
 
 def db_paragraphs(level):
     try: 
-        dbconnection = sqlite3.connect(db_path)
+        dbconnection = sqlite3.connect(db_path_local) # local today
         db = dbconnection.cursor()
         db.execute("SELECT * FROM paragraphs WHERE difficulty = ?", str(level))
     except sqlite3.Error as error:
@@ -19,6 +19,22 @@ def db_paragraphs(level):
     db.close()
     dbconnection.close()
     return rows
+
+
+def db_book(book_id):
+    try: 
+        dbconnection = sqlite3.connect(db_path_local) # local today
+        db = dbconnection.cursor()
+        db.execute("SELECT authors.name AS author, books.title AS title FROM books JOIN authors ON books.author_id = authors.id WHERE books.id = ?", str(book_id))
+    except sqlite3.Error as error:
+        print("Error connecting to db", error)
+        return None
+    
+    rows = db.fetchall()
+    db.close()
+    dbconnection.close()
+    return rows
+
 
 def clean_paragraph():
     range_start = 2
@@ -34,19 +50,6 @@ def clean_paragraph():
     details = {'book': result[target][1], 'text': paragraph}
     return details
 
-def db_book(book_id):
-    try: 
-        dbconnection = sqlite3.connect('books.db')
-        db = dbconnection.cursor()
-        db.execute("SELECT authors.name AS author, books.title AS title FROM books JOIN authors ON books.author_id = authors.id WHERE books.id = ?", str(book_id))
-    except sqlite3.Error as error:
-        print("Error connecting to db", error)
-        return None
-    
-    rows = db.fetchall()
-    db.close()
-    dbconnection.close()
-    return rows
 
 @app.route("/")
 def index():
