@@ -3,11 +3,12 @@ from random import randrange
 import sqlite3
 
 app = Flask(__name__)
-
+db_path = '/home/probablyrez/mysite/books.db' #pythonganywhere
+db_path_local = 'books.db' #local testing
 
 def db_paragraphs(level):
     try: 
-        dbconnection = sqlite3.connect('books.db')
+        dbconnection = sqlite3.connect(db_path)
         db = dbconnection.cursor()
         db.execute("SELECT * FROM paragraphs WHERE difficulty = ?", str(level))
     except sqlite3.Error as error:
