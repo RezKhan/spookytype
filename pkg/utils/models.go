@@ -2,7 +2,6 @@ package models
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"math/rand"
 	"strings"
@@ -19,7 +18,7 @@ type Paragraph struct {
 
 }
 
-func GetParagraph() {
+func GetParagraph() Paragraph {
 	rand.New(rand.NewSource(time.Now().UnixNano()))
 	// TODO: Fix the typing difficulty and make sure there's a minimum rating of 1
 	rnum := rand.Intn(4)
@@ -40,7 +39,11 @@ func GetParagraph() {
 	// INNER JOIN authors on authors.id = books.author_id
 	// WHERE paragraphs.difficulty = ?
 
-	rows, err := db.Query("SELECT paragraphs.text, paragraphs.id, books.title, authors.name FROM paragraphs INNER JOIN books ON books.id = paragraphs.book_id INNER JOIN authors ON authors.id = books.author_id WHERE paragraphs.difficulty = ?", rnum)
+	rows, err := db.Query("SELECT paragraphs.text, paragraphs.id, books.title, authors.name " +
+		"FROM paragraphs " +
+		"INNER JOIN books ON books.id = paragraphs.book_id " +
+		"INNER JOIN authors ON authors.id = books.author_id " +
+		"WHERE paragraphs.difficulty = ?", rnum)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -57,7 +60,7 @@ func GetParagraph() {
 		paragraph.ParagraphText = strings.Split(ptext, "")
 		paragraphs = append(paragraphs, paragraph)
 	}
-
-	fmt.Println(len(paragraphs))
+	
+	return paragraphs[rand.Intn(len(paragraphs))]
 }
 

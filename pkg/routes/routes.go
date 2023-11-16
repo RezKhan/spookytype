@@ -1,13 +1,12 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
+	models "spookytype/pkg/utils"
 )
 
-func SpookyTypeRoutes() {
-	http.HandleFunc("/", HandleIndex)
-}
-
-func HandleIndex() {
-
+func HandleIndex(writer http.ResponseWriter, request *http.Request) {
+	paragraph := models.GetParagraph()
+	fmt.Println(paragraph)
 }
