@@ -1,15 +1,9 @@
 package main
 
 import (
-	"fmt"
-	// httplib "spookytye/pkg/httplib"
-	models "spookytype/pkg/utils"
+	httplib "spookytype/pkg/httplib"
 )
 
 func main() {
-	fmt.Println("Hello, Mum!")
-	paragraph := models.GetParagraph()
-	fmt.Println(paragraph)
-
-	// httplib.SpookyTypeServer()
+	httplib.SpookyTypeServer()
 }
