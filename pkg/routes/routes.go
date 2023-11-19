@@ -17,14 +17,18 @@ func HandleIndex(writer http.ResponseWriter, request *http.Request) {
 	fmt.Println(paragraph)
 
 	indexfile := "./pkg/routes/html/index.html"
-	tmpl, err := template.ParseFiles(indexfile)
+	tmpl, err := template.New("").Funcs(template.FuncMap{
+		"add": func(a int, b int) int {
+			return a + b
+		},
+	}).ParseFiles(indexfile)
 	if err != nil {
 		log.Print(err.Error())
 		http.Error(writer, "", http.StatusInternalServerError)
 		return
 	}
 
-	err = tmpl.ExecuteTemplate(writer, "index", paragraph)
+	err = tmpl.ExecuteTemplate(writer, "main", paragraph)
 	if err != nil {
 		log.Print(err.Error())
 		http.Error(writer, "", http.StatusInternalServerError)
