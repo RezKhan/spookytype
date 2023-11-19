@@ -1,0 +1,109 @@
+:root {
+    --bg-color: #161324;
+    --fg-color: #e06e23;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: whitesmoke;
+}
+
+main {
+    min-height: 50vh;
+    justify-content: space-around;
+}
+
+.header {
+    text-align: center;
+    color: var(--fg-color);
+}
+
+.spooky-title {
+    margin: auto;
+    font-family: 'Griffy', sans-serif;
+    font-size: 5em;
+}
+
+.typing-prompt {
+    margin: auto;
+    margin-bottom: 0.5rem;
+    font-size: 1.5em;
+    color: var(--fg-color)
+}
+
+.main-container {
+    width: 80vw;
+    margin: auto;
+    font-size: 1em;
+}
+
+.footer {
+    max-height: 60px;
+    bottom: 0;
+    text-align: center;
+}
+
+.content{
+    margin-top: 3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+.book-info-container {
+    color: slategray;
+    font-size: 0.8em;
+    text-align: right;
+    margin-bottom: 2rem;
+}
+
+.word {
+    display: inline;
+}
+
+@keyframes blinking {
+    0% {
+        background-color: var(--fg-color);
+        opacity: 0;
+    }
+    100% {
+        background-color: var(--fg-color);
+        opacity: 100;
+    }
+}
+
+.blink {
+    animation-timing-function: ease-in;
+    animation: blinking 0.75s infinite;
+}
+
+.good {
+    color: var(--fg-color);
+}
+
+.bad {
+    color: #c70707;
+}
+
+.input-container {
+    opacity: 0;
+    display: none;
+}
+
+input[type=text] {
+    border: 0;
+    background-color: var(--bg-color);
+    outline: none;
+}
+
+.timer-container {
+    margin-top: 2rem;
+    color: slategray;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+
+.off {
+    /* display: none; */
+    opacity: 0;
+}

@@ -11,11 +11,11 @@ import (
 )
 
 type Paragraph struct {
-	ParagraphText []string
-	ParagraphID int
+	Text      []string
+	Chars     [][]string
+	ID        int
 	BookTitle string
-	Author string
-
+	Author    string
 }
 
 func GetParagraph() Paragraph {
@@ -30,7 +30,6 @@ func GetParagraph() Paragraph {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
 	defer db.Close()
 
 	// SELECT paragraphs.text, paragraphs.id, books.title, authors.name
@@ -39,28 +38,34 @@ func GetParagraph() Paragraph {
 	// INNER JOIN authors on authors.id = books.author_id
 	// WHERE paragraphs.difficulty = ?
 
-	rows, err := db.Query("SELECT paragraphs.text, paragraphs.id, books.title, authors.name " +
-		"FROM paragraphs " +
-		"INNER JOIN books ON books.id = paragraphs.book_id " +
-		"INNER JOIN authors ON authors.id = books.author_id " +
+	rows, err := db.Query("SELECT paragraphs.text, paragraphs.id, books.title, authors.name "+
+		"FROM paragraphs "+
+		"INNER JOIN books ON books.id = paragraphs.book_id "+
+		"INNER JOIN authors ON authors.id = books.author_id "+
 		"WHERE paragraphs.difficulty = ?", rnum)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer rows.Close()
 
 	var paragraphs []Paragraph
 	for rows.Next() {
 		var paragraph Paragraph
 		var ptext string
 
-		err = rows.Scan(&ptext, &paragraph.ParagraphID, &paragraph.BookTitle, &paragraph.Author)
+		err = rows.Scan(&ptext, &paragraph.ID, &paragraph.BookTitle, &paragraph.Author)
 		if err != nil {
 			log.Fatal(err)
 		}
-		paragraph.ParagraphText = strings.Split(ptext, "")
+
+		words := strings.Fields(ptext)
+		for _, word := range words {
+			chars := strings.Split(word, "")
+			paragraph.Chars = append(paragraph.Chars, chars)
+		}
+		paragraph.Text = strings.Split(ptext, "")
 		paragraphs = append(paragraphs, paragraph)
 	}
-	
+
 	return paragraphs[rand.Intn(len(paragraphs))]
 }
-
