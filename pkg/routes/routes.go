@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -14,7 +13,6 @@ func HandleIndex(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	paragraph := models.GetParagraph()
-	fmt.Println(paragraph)
 
 	indexfile := "./public/html/index.html"
 	tmpl, err := template.New("").Funcs(template.FuncMap{
