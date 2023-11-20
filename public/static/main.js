@@ -1,4 +1,4 @@
-const spookytype = {
+const stapp = {
     words: document.querySelectorAll(".word"),
     letters: document.querySelectorAll(".letter"),
     timerbox: document.querySelector(".timer-container"),
@@ -16,37 +16,39 @@ const spookytype = {
     wpm: 0,
 }
 
-spookytype.words.forEach((el, index) => {
+stapp.words.forEach((el, index) => {
     el.id = "word" + index;
 })
 
-spookytype.letters.forEach((el, index) => {
+stapp.letters.forEach((el, index) => {
     el.id = "ltr" + index; 
-    spookytype.originalText[index] = el.innerHTML;
+    stapp.originalText[index] = el.innerHTML;
 });
 
 function wpmCalc() {
-    if (!spookytype.letters[spookytype.counter].classList.contains("ll")) {
+    if (!stapp.letters[stapp.counter].classList.contains("ll")) {
         return;
     } 
-    spookytype.wordsCompleted++;
-    spookytype.wordTimer = performance.now()
-    currentWordTime = (spookytype.wordTimer - spookytype.lastWordTimer) / 1000;
-    totalWordTime = (spookytype.wordTimer  - spookytype.timerStart) / 1000;
-    spookytype.wpm += totalWordTime;
-    spookytype.lastWordTimer = spookytype.wordTimer;
-    spookytype.timerbox.innerHTML = (`Raw WPM: ${(spookytype.wordsCompleted / totalWordTime * 60).toFixed(2)} <br>
-    Real WPM: ${((spookytype.wordsCompleted / totalWordTime * 60) * (spookytype.correctLetters / (spookytype.correctLetters + spookytype.incorrectLetters))).toFixed(2)} <br>
-    Accuracy: ${(spookytype.correctLetters / (spookytype.correctLetters + spookytype.incorrectLetters) * 100).toFixed(2)}%<BR>
-    Total time: ${totalWordTime.toFixed(2)} <br>
-    Total words: ${spookytype.wordsCompleted}<br>`);
+    stapp.wordsCompleted++;
+    stapp.wordTimer = performance.now()
+    currentWordTime = (stapp.wordTimer - stapp.lastWordTimer) / 1000;
+    totalWordTime = (stapp.wordTimer  - stapp.timerStart) / 1000;
+    stapp.wpm += totalWordTime;
+    stapp.lastWordTimer = stapp.wordTimer;
+    stapp.timerbox.innerHTML = (`
+    <div>Raw WPM: ${(stapp.wordsCompleted / totalWordTime * 60).toFixed(2)}</div>
+    <div>Real WPM: ${((stapp.wordsCompleted / totalWordTime * 60) * (stapp.correctLetters / (stapp.correctLetters + stapp.incorrectLetters))).toFixed(2)}</div>
+    <div>Accuracy: ${(stapp.correctLetters / (stapp.correctLetters + stapp.incorrectLetters) * 100).toFixed(2)}%</div>
+    <div>Total time: ${totalWordTime.toFixed(2)}</div>
+    <div>Total words: ${stapp.wordsCompleted}</div>
+    `);
 
 }
 
 function cursor() {
-    spookytype.letters.forEach(el => {
+    stapp.letters.forEach(el => {
         ltrid = el.id.replace("ltr", "");
-        if (spookytype.counter == ltrid) {
+        if (stapp.counter == ltrid) {
             el.classList.add("blink");
         } else {
             el.classList.remove("blink");
@@ -64,10 +66,10 @@ function happyPath(keyEvt) {
     if (controlKeys.includes(keyEvt.key)) {
         return false;
     }
-    if (keyEvt.key == 'Backspace' && spookytype.counter <= 0) {
+    if (keyEvt.key == 'Backspace' && stapp.counter <= 0) {
         return false;
     }
-    if (spookytype.counter >= spookytype.letters.length - 1) {
+    if (stapp.counter >= stapp.letters.length - 1) {
         return false;
     }
     return true;
@@ -75,38 +77,40 @@ function happyPath(keyEvt) {
 
 function assessKeyEntry(keyEvt) {
     if (keyEvt.key == 'Backspace') {
-        spookytype.counter--;
-        spookytype.letters[spookytype.counter] = spookytype.originalText[spookytype.counter];
-        if (spookytype.letters[spookytype.counter].classList.includes("bad")) {
-            spookytype.letters[spookytype.counter].classList.remove("bad");
-            // spookytype.incorrectLetters--;
+        stapp.counter--;
+        stapp.letters[stapp.counter] = stapp.originalText[stapp.counter];
+        // if (stapp.letters[stapp.counter].classList.includes("bad")) {
+        if (stapp.letters[stapp.counter].classList.contains("bad")) {
+                stapp.letters[stapp.counter].classList.remove("bad");
+            // stapp.incorrectLetters--;
         }
-        if (spookytype.letters[spookytype.counter].classList.includes("good")) {
-            spookytype.letters[spookytype.counter].classList.remove("good");
-            // spookytype.correctLetters--;
+        // if (stapp.letters[stapp.counter].classList.includes("good")) {
+        if (stapp.letters[stapp.counter].classList.contains("good")) {
+                stapp.letters[stapp.counter].classList.remove("good");
+            // stapp.correctLetters--;
         }
         return;
     }
-    if (keyEvt.key == spookytype.letters[spookytype.counter].innerHTML) {
-        spookytype.letters[spookytype.counter].classList.add("good");
-        spookytype.correctLetters++;
+    if (keyEvt.key == stapp.letters[stapp.counter].innerHTML) {
+        stapp.letters[stapp.counter].classList.add("good");
+        stapp.correctLetters++;
     } else {
-        spookytype.letters[spookytype.counter].classList.add("bad");
-        spookytype.incorrectLetters++;
+        stapp.letters[stapp.counter].classList.add("bad");
+        stapp.incorrectLetters++;
     } 
-    spookytype.counter++;
+    stapp.counter++;
 }
 
 function keyHandler(keyEvt) {
     if(!happyPath(keyEvt)) {
         return;
     }
-    if (spookytype.counter == 0) {
-        spookytype.started = true;
-        spookytype.timerStart = performance.now();
-        spookytype.lastWordTimer = performance.now();
-        spookytype.timerbox.classList.remove("off");
-        spookytype.typingprompt.classList.add("off");
+    if (stapp.counter == 0) {
+        stapp.started = true;
+        stapp.timerStart = performance.now();
+        stapp.lastWordTimer = performance.now();
+        stapp.timerbox.classList.remove("off");
+        stapp.typingprompt.classList.add("off");
     }
     assessKeyEntry(keyEvt)
     wpmCalc();
