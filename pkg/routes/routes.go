@@ -16,7 +16,7 @@ func HandleIndex(writer http.ResponseWriter, request *http.Request) {
 	paragraph := models.GetParagraph()
 	fmt.Println(paragraph)
 
-	indexfile := "./pkg/routes/html/index.html"
+	indexfile := "./public/html/index.html"
 	tmpl, err := template.New("").Funcs(template.FuncMap{
 		"add": func(a int, b int) int {
 			return a + b
