@@ -8,7 +8,8 @@ import (
 )
 
 func SpookyTypeServer() {
-	http.Handle("./static", http.FileServer(http.Dir("./public")))
+	fs := http.FileServer(http.Dir("./public"))
+	http.Handle("/static/", fs)
 
 	http.HandleFunc("/", routes.HandleIndex)
 
