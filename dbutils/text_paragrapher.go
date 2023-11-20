@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -11,8 +10,6 @@ import (
 func combineParagraphs(fileContent string) string {
 	paragraphs := strings.Split(fileContent, "\n\n")
 	var formattedParagraphs []string
-
-	fmt.Println(paragraphs[0])
 
 	for _, paragraph := range paragraphs {
 		formattedParagraph := strings.Join(strings.Fields(paragraph), " ")
@@ -32,8 +29,10 @@ func ReadandReplace(filePath string) {
 	}
 
 	paragraphText := combineParagraphs(string(fileContent))
-	os.WriteFile(filePath, []byte(paragraphText), 0644)
-	fmt.Println(paragraphText)
+	err = os.WriteFile(filePath, []byte(paragraphText), 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 
