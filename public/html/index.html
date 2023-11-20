@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Griffy">
-    <link rel="stylesheet" href="./static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
     <title>Spooky Type</title>
 </head>
@@ -28,19 +28,18 @@
                     </div>
                 </div>
                 <div class="word-container">
-                    {{ range .Chars}}<span class="word">{{$wordlen := add (len .) -1}}{{ range $index, $char := . }}<span {{ if eq $index $wordlen}} class="letter ll" {{ else }} class="letter"{{end}}>{{.}}</span>{{ end }}</span><span> </span></span>{{ end }}
+                    {{ range .Chars}}<span class="word">{{$wordlen := add (len .) -1}}{{ range $index, $char := . }}<span {{ if eq $index $wordlen}} class="letter ll" {{ else }} class="letter"{{end}}>{{.}}</span>{{ end }}</span><span> </span>{{ end }}
                 </div>
                 <div class="input-container">
                     <input type="text" class="wordinput" autofocus autocomplete="off" autocapitalize="off" onblur="moveToInput()">
                 </div>
-                <div class="timer-container off">
-                    
+                <div class="timer-container off">        
                 </div>
             </div>
         </div>
     </main>
     <!-- <footer class="footer">Created for CS50 Project, using Python 3.10, Flask 3.0, and JavaScript</footer> -->
-    <script defer src="./static/main.js"></script>
+    <script defer src="/static/main.js"></script>
 </body>
 </html>
 {{ end }}
