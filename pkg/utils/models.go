@@ -70,7 +70,7 @@ func GetParagraph() Paragraph {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(paragraph.ID, prating)
+	
 	words := strings.Fields(ptext)
 	for _, word := range words {
 		chars := strings.Split(word, "")
