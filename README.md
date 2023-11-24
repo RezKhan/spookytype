@@ -1,5 +1,5 @@
 # SpookyType
-A spooky themed touch typing web application with selected texts from Project Gutenberg. Fun for the whole family, of people who can type.
+A spooky themed touch typing web application with selected texts from Project Gutenberg. Back end writtenn in Go, front end in javascript. Fun for the whole family... of people who can type.
 
 ## History: 
 Originally created to complete the project for CS50x, subsequently ported to Go to learn go. 
