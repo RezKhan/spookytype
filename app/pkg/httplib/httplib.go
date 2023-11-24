@@ -1,19 +1,32 @@
 package httplib
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	routes "spookytype/pkg/routes"
 )
 
 func SpookyTypeServer() {
+	envStrings := os.Environ()
+	for index, estring := range envStrings {
+		fmt.Println(index, estring)
+	}
+	PORT := os.Getenv("PORT")
+	if PORT == "" {
+		PORT = "9000"
+	}
+
+	HOST := "localhost:" + PORT
+
 	fs := http.FileServer(http.Dir("./public"))
 	http.Handle("/static/", fs)
 
 	http.HandleFunc("/", routes.HandleIndex)
 
-	serverErr := http.ListenAndServe("localhost:8080", nil)
+	serverErr := http.ListenAndServe(HOST, nil)
 	if serverErr != nil {
 		log.Fatal(serverErr)
 	}
