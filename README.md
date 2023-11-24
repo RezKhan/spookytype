@@ -1,7 +1,5 @@
 # SpookyType
-
-## Description: 
-Simple touch typing with some selected spooky texts from Project Gutenberg. 
+A spooky themed touch typing web application with selected texts from Project Gutenberg. Fun for the whole family, of people who can type.
 
 ## History: 
 Originally created to complete the project for CS50x, subsequently ported to Go to learn go. 
