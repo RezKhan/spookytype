@@ -1,7 +1,6 @@
 package httplib
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -10,13 +9,13 @@ import (
 )
 
 func SpookyTypeServer() {
-	envStrings := os.Environ()
-	for index, estring := range envStrings {
-		fmt.Println(index, estring)
-	}
+	// envStrings := os.Environ()
+	// for index, estring := range envStrings {
+	// 	fmt.Println(index, estring)
+	// }
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
-		PORT = "9000"
+		PORT = "8080"
 	}
 
 	HOST := "localhost:" + PORT
