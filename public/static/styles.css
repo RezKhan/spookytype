@@ -72,6 +72,7 @@ main {
 }
 
 .blink {
+    animation-timing-function: ease-in;
     animation: blinking 0.75s infinite;
 }
 

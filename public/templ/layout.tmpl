@@ -1,0 +1,50 @@
+package main
+
+import(
+	models "spookytype/pkg/utils/"
+)
+
+templ header() {
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Griffy">
+		<link rel="stylesheet" href="../static/styles.css">
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+		<title>Spooky Type</title>
+	</head>
+}
+
+templ main(paragraph models.Paragraph) {
+	<body>
+	    <div class="header">
+	        <div class="spooky-title">SpookyType</div>
+    	</div>
+		<main>
+			<div class="content">
+			    <div class="typing-prompt">
+	        		Start typing ...
+	    		</div>
+    			<div class="book-info-container">
+			        <div class="author-container">
+        			    author: {{ author }}
+	        		</div>
+		    	    <div class="title-container">
+        	    		title: {{ title }}
+			        </div>
+			    </div>
+				<div class="word-container">
+				<!-- word loop -->
+				</div>
+				<div class="input-container">
+					<input type="text" class="wordinput" autofocus autocomplete="off" autocapitalize="off" onblur="moveToInput()">
+			    </div>
+			    <div class="timer-container off">
+				</div>
+			</div>
+		</main>
+	</body>
+}
+

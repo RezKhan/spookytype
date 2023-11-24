@@ -16,7 +16,7 @@ CREATE TABLE "paragraphs" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"book_id"	INTEGER NOT NULL,
 	"text"	TEXT NOT NULL,
-	"difficulty"	INTEGER NOT NULL,
+	"rating"	INTEGER NOT NULL,
 	FOREIGN KEY("book_id") REFERENCES "books"("id"),
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
