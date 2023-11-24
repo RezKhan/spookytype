@@ -15,6 +15,7 @@ COPY . .
 # COPY favicon.svg .
 # COPY LICENSE .
 
-RUN go build -v -o app .
+RUN go build -v -o /usr/local/bin/app .
 
-ENTRYPOINT [ "/usr/src/app/app" ]
+# ENTRYPOINT [ "/usr/src/app/" ]
+CMD [ "app" ]
