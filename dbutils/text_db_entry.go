@@ -2,16 +2,30 @@ package main
 
 import (
 	"bufio"
+	"strconv"
 	"strings"
 	"unicode"
 
-	// "database/sql"
-	"fmt"
+	"database/sql"
 	"log"
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
 )
+
+func dbInsert(bookID uint64, paragraphText string, lineRating int) {
+	db, err := sql.Open("sqlite3", "../books.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	
+	_, err = db.Exec("INSERT INTO paragraphs (book_id, text, rating) VALUES (?, ?, ?)", 
+		bookID, paragraphText, lineRating)
+	if err != nil {
+		log.Println(err)
+	}
+}
 
 func handleLine(lineText string) int {
 	qwertyValues := map[string]int{
@@ -39,8 +53,7 @@ func handleLine(lineText string) int {
 	return stringSum + wordCount
 }
 
-
-func rateLinesInTextFile(textFilePath string, bookID string) {
+func rateLinesInTextFile(textFilePath string, bookID uint64) {
 	minLength := 50
 	textFile, err := os.Open(textFilePath)
 	if err != nil {
@@ -48,13 +61,12 @@ func rateLinesInTextFile(textFilePath string, bookID string) {
 	}
 	defer textFile.Close()
 	textScanner := bufio.NewScanner(textFile)
-	var lineScores []int
 
 	for textScanner.Scan() {
 		if len(textScanner.Text()) > minLength {
 			lineText := textScanner.Text()
 			lineScore := handleLine(lineText)
-			fmt.Println(lineScore)
+			dbInsert(bookID, lineText, lineScore)
 		}
 	}
 }
@@ -65,7 +77,10 @@ func main() {
 		log.Fatal("Not enough arguments..")
 	}
 	textFilePath := os.Args[1]
-	bookID := os.Args[2]
+	bookID, err := strconv.ParseUint(os.Args[2], 10, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	rateLinesInTextFile(textFilePath, bookID)
 }
