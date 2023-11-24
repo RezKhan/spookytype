@@ -1,6 +1,13 @@
+# lightweight image
 FROM golang:alpine
+
+# or full golang
 #FROM golang:1.21
 
+# installs the base
+RUN apk add build-base
+
+#sets work directory
 WORKDIR /usr/src/app
 
 # pre-copy/cache go.mod for pre-downloading dependencies and 
@@ -8,14 +15,14 @@ WORKDIR /usr/src/app
 COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
+#copies contents of app directory
 COPY . .
 
-# COPY /pkg .
-# COPY books.db .
-# COPY favicon.svg .
-# COPY LICENSE .
+# sets a listening port
+EXPOSE 9000
 
-RUN go build -v -o /usr/local/bin/app .
+#sets ennvironment and makes sure CGO is there for sqlite3
+RUN GOOS=linux CGO_ENABLED=1 GOARCH=amd64 go build -v -o /usr/local/bin/app .
 
-# ENTRYPOINT [ "/usr/src/app/" ]
+#runs the app
 CMD [ "app" ]
