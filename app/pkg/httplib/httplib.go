@@ -18,7 +18,7 @@ func SpookyTypeServer() {
 		PORT = "8080"
 	}
 
-	HOST := "localhost:" + PORT
+	HOST := "0.0.0.0:" + PORT
 
 	fs := http.FileServer(http.Dir("./public"))
 	http.Handle("/static/", fs)
