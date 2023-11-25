@@ -107,3 +107,8 @@ input[type=text] {
     /* display: none; */
     opacity: 0;
 }
+
+
+.keyboard_row {
+    display: flex;
+}
