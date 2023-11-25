@@ -1,11 +1,12 @@
 # lightweight image
-FROM golang:alpine
+FROM golang:1.21-alpine3.18
 
 # or full golang
 #FROM golang:1.21
 
 # installs the base
 RUN apk add build-base
+RUN apk upgrade --no-cache
 
 #sets work directory
 WORKDIR /usr/src/app
