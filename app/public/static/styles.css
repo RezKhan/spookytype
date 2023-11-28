@@ -1,6 +1,7 @@
 :root {
     --bg-color: #161324;
     --fg-color: #e06e23;
+    --keysize: 2.5em;
 }
 
 body {
@@ -109,6 +110,62 @@ input[type=text] {
 }
 
 
-.keyboard_row {
+.keyboard-container {
+    width: 690px;
+    padding: 5px;
+    margin: auto;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+}
+
+.keyboard-row {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.keyboard-key {
+    display: flex;
+    margin: 0.1em;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    height: var(--keysize);
+}
+
+.key-char {
+    text-align: center;
+}
+
+.one {
+    display: inline-block; 
+    width: var(--keysize);
+    vertical-align: middle;
+}
+
+.threehalf {
+    display: inline-block; 
+    width: calc(var(--keysize) * 1.5);
+}
+
+.threehalfish {
+    display: inline-block; 
+    width: calc(var(--keysize) * 1.4);
+
+}
+
+.double {
+    display: inline-block; 
+    width: calc(var(--keysize) * 2);
+}
+
+.fivehalf {
+    display: inline-block; 
+    width: calc(var(--keysize) * 2.5);
+}
+
+.fivehalfish {
+    display: inline-block; 
+    width: calc(var(--keysize) * 2.625);
 }
